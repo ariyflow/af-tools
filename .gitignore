@@ -1,0 +1,48 @@
+# Dependencies
+node_modules/
+
+# Build output
+dist/
+coverage/
+*.tsbuildinfo
+
+# Runtime data
+*.log
+npm-debug.log*
+yarn-debug.log*
+pnpm-debug.log*
+tmp/
+temp/
+uploads/
+data/
+
+# Environment files (may contain secrets)
+.env
+.env.*
+*.env
+!.env.example
+
+# Secrets and credentials
+*.pem
+*.key
+*.p12
+*.pfx
+*.jks
+*.keystore
+.npmrc
+.yarnrc
+.npmrc.*
+.netrc
+.git-credentials
+secrets/
+credentials/
+
+# Local overrides
+docker-compose.override.yml
+.vscode/
+.idea/
+*.local
+
+# OS files
+.DS_Store
+Thumbs.db

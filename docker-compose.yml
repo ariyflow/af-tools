@@ -1,0 +1,38 @@
+name: af-tools
+
+services:
+  af-tools:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: af-tools:latest
+    container_name: af-tools
+    ports:
+      - '45100:3000'
+    environment:
+      HOST: 0.0.0.0
+      PORT: '3000'
+      MAX_UPLOAD_MB: '${MAX_UPLOAD_MB:-200}'
+      MAX_DURATION_SECONDS: '${MAX_DURATION_SECONDS:-60}'
+      JOB_CONCURRENCY: '${JOB_CONCURRENCY:-2}'
+      MAX_QUEUED_JOBS: '${MAX_QUEUED_JOBS:-20}'
+      JOB_TTL_MINUTES: '${JOB_TTL_MINUTES:-60}'
+      PROCESS_TIMEOUT_SECONDS: '${PROCESS_TIMEOUT_SECONDS:-180}'
+      LOG_LEVEL: '${LOG_LEVEL:-info}'
+      TRUST_PROXY: '${TRUST_PROXY:-false}'
+      TEMP_DIR: /app/tmp
+    restart: unless-stopped
+    stop_grace_period: 30s
+    security_opt:
+      - no-new-privileges:true
+    healthcheck:
+      test: ['CMD', 'wget', '-qO-', 'http://127.0.0.1:3000/api/health']
+      interval: 30s
+      timeout: 5s
+      start_period: 15s
+      retries: 3
+    logging:
+      driver: json-file
+      options:
+        max-size: '10m'
+        max-file: '3'
